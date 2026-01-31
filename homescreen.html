@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom Utilities */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .text-stroke-white {
+            -webkit-text-stroke: 1px white;
+            color: black;
+        }
+        /* Fade animation for modal */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        .animate-zoom-in {
+            animation: zoomIn 0.3s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-white font-sans selection:bg-red-600 selection:text-white overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-colors duration-300 bg-gradient-to-b from-black/80 to-transparent">
+        <div class="px-4 md:px-12 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-8">
+                <!-- Logo -->
+                <div class="text-red-600 font-bold text-2xl md:text-4xl cursor-pointer tracking-tighter">NETFLIX</div>
+                
+                <!-- Desktop Links -->
+                <ul class="hidden md:flex space-x-6 text-sm text-gray-200">
+                    <li class="font-mediuSm hover:text-gray-400 cursor-pointer">Home</li>
+                    <li class="hover:text-gray-400 cursor-pointer">TV Shows</li>
+                    <li class="hover:text-gray-400 cursor-pointer">Movies</li>
+                    <li class="hover:text-gray-400 cursor-pointer">New & Popular</li>
+                    <li class="hover:text-gray-400 cursor-pointer">My List</li>
+                </ul>
+
+                <!-- Mobile Browse Trigger -->
+                <div class="md:hidden flex items-center text-white text-sm font-medium cursor-pointer" onclick="toggleMobileMenu()">
+                    Browse 
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </div>
+            </div>
+
+            <!-- Right Icons -->
+            <div class="flex items-center space-x-6 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 cursor-pointer hover:text-gray-300 hidden sm:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <div class="cursor-pointer hover:text-gray-300 hidden sm:block">Kids</div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 cursor-pointer hover:text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                <div class="flex items-center space-x-2 cursor-pointer group">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Profile" class="w-8 h-8 rounded bg-blue-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform group-hover:rotate-180 duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 w-full bg-black/95 border-t border-zinc-800 text-center py-4 text-white text-sm font-medium space-y-4">
+            <div class="hover:text-gray-400 cursor-pointer">Home</div>
+            <div class="hover:text-gray-400 cursor-pointer">TV Shows</div>
+            <div class="hover:text-gray-400 cursor-pointer">Movies</div>
+            <div class="hover:text-gray-400 cursor-pointer">New & Popular</div>
+            <div class="hover:text-gray-400 cursor-pointer">My List</div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div id="hero-section">
+        <!-- Injected via JS -->
+    </div>
+
+    <!-- Content Rows -->
+    <div id="content-rows" class="relative z-10 -mt-24 md:-mt-48 pb-10 space-y-4">
+        <!-- Injected via JS -->
+    </div>
+
+    <!-- Footer -->
+    <footer class="max-w-4xl mx-auto px-4 py-12 text-zinc-500 text-sm">
+        <div class="flex space-x-4 mb-4">
+            <div class="w-6 h-6 bg-zinc-800 rounded"></div>
+            <div class="w-6 h-6 bg-zinc-800 rounded"></div>
+            <div class="w-6 h-6 bg-zinc-800 rounded"></div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+            <ul class="space-y-2">
+                <li class="hover:underline cursor-pointer">Audio and Subtitles</li>
+                <li class="hover:underline cursor-pointer">Media Center</li>
+                <li class="hover:underline cursor-pointer">Privacy</li>
+                <li class="hover:underline cursor-pointer">Contact Us</li>
+            </ul>
+            <ul class="space-y-2">
+                <li class="hover:underline cursor-pointer">Audio Description</li>
+                <li class="hover:underline cursor-pointer">Investor Relations</li>
+                <li class="hover:underline cursor-pointer">Legal Notices</li>
+            </ul>
+            <ul class="space-y-2">
+                <li class="hover:underline cursor-pointer">Help Center</li>
+                <li class="hover:underline cursor-pointer">Jobs</li>
+                <li class="hover:underline cursor-pointer">Cookie Preferences</li>
+            </ul>
+            <ul class="space-y-2">
+                <li class="hover:underline cursor-pointer">Gift Cards</li>
+                <li class="hover:underline cursor-pointer">Terms of Use</li>
+                <li class="hover:underline cursor-pointer">Corporate Information</li>
+            </ul>
+        </div>
+        <button class="border border-gray-500 px-4 py-1 hover:text-white mt-4 mb-4">Service Code</button>
+        <div>&copy; 2024 Netflix Clone, Inc.</div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="movie-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto animate-fade-in" onclick="closeModal()">
+        <div class="relative w-full max-w-4xl bg-[#181818] rounded-lg shadow-2xl overflow-hidden animate-zoom-in" onclick="event.stopPropagation()">
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-20 bg-[#181818] rounded-full p-2 hover:bg-neutral-700 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 18 18"/></svg>
+            </button>
+
+            <!-- Modal Content (Injected JS) -->
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- DATA ---
+        const FEATURED_MOVIE = {
+            id: 'hero-1',
+            title: 'Stranger Things',
+            description: "When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces, and one strange little girl.",
+            image: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=80&w=2070&auto=format&fit=crop",
+            match: '98% Match',
+            year: '2022',
+            age: '16+',
+            seasons: '4 Seasons',
+            genre: 'Sci-Fi TV'
+        };
+
+        const CATEGORIES = [
+            {
+                title: "Trending Now",
+                id: "trending",
+                items: [
+                    { id: 1, title: "Dark Matter", image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500&h=750&fit=crop" },
+                    { id: 2, title: "The Silent Sea", image: "https://images.unsplash.com/photo-1478720568477-152d9b164e63?w=500&h=750&fit=crop" },
+                    { id: 3, title: "Cyberpunk", image: "https://images.unsplash.com/photo-1535905557558-afc4877a26fc?w=500&h=750&fit=crop" },
+                    { id: 4, title: "Neon City", image: "https://images.unsplash.com/photo-1515634928627-2a4e0dae3ddf?w=500&h=750&fit=crop" },
+                    { id: 5, title: "Space Odyssey", image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=500&h=750&fit=crop" },
+                    { id: 6, title: "The Martian", image: "https://images.unsplash.com/photo-1614728853913-1e221a652a42?w=500&h=750&fit=crop" },
+                ]
+            },
+            {
+                title: "Top 10 in Sri Lanka Today",
+                id: "top10",
+                items: [
+                    { id: 7, title: "Inception", image: "https://images.unsplash.com/photo-1604871000636-074fa5117945?w=500&h=750&fit=crop", top10: true, rank: 1 },
+                    { id: 8, title: "Interstellar", image: "https://images.unsplash.com/photo-1506318137071-a8bcbf6b925d?w=500&h=750&fit=crop", top10: true, rank: 2 },
+                    { id: 9, title: "Dune", image: "https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=500&h=750&fit=crop", top10: true, rank: 3 },
+                    { id: 10, title: "Blade Runner", image: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=500&h=750&fit=crop", top10: true, rank: 4 },
+                    { id: 11, title: "Arrival", image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=500&h=750&fit=crop", top10: true, rank: 5 },
+                ]
+            },
+            {
+                title: "Action Thrillers",
+                id: "action",
+                items: [
+                    { id: 12, title: "John Wick", image: "https://images.unsplash.com/photo-1552083375-1447ce886485?w=500&h=750&fit=crop" },
+                    { id: 13, title: "Mad Max", image: "https://images.unsplash.com/photo-1568876694728-451bbf694b83?w=500&h=750&fit=crop" },
+                    { id: 14, title: "Gladiator", image: "https://images.unsplash.com/photo-1596727147705-54a9d6ed27e6?w=500&h=750&fit=crop" },
+                    { id: 15, title: "300", image: "https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=500&h=750&fit=crop" },
+                    { id: 16, title: "Troy", image: "https://images.unsplash.com/photo-1563245372-f21724e3a8c9?w=500&h=750&fit=crop" },
+                    { id: 17, title: "Spartacus", image: "https://images.unsplash.com/photo-1599839575945-a9e5af0c3fa5?w=500&h=750&fit=crop" },
+                ]
+            },
+            {
+                title: "New Releases",
+                id: "new",
+                items: [
+                    { id: 18, title: "The Adam Project", image: "https://images.unsplash.com/photo-1534237710431-e2fc698436d0?w=500&h=750&fit=crop" },
+                    { id: 19, title: "Red Notice", image: "https://images.unsplash.com/photo-1560169578-fadbbf9684cc?w=500&h=750&fit=crop" },
+                    { id: 20, title: "Don't Look Up", image: "https://images.unsplash.com/photo-1454789548728-85d2696cfbaf?w=500&h=750&fit=crop" },
+                    { id: 21, title: "Gray Man", image: "https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=500&h=750&fit=crop" },
+                    { id: 22, title: "Extraction", image: "https://images.unsplash.com/photo-1636287040445-568478474241?w=500&h=750&fit=crop" },
+                ]
+            }
+        ];
+
+        // --- RENDER FUNCTIONS ---
+
+        function renderHero() {
+            const heroEl = document.getElementById('hero-section');
+            heroEl.innerHTML = `
+                <div class="relative h-[56.25vw] min-h-[500px] w-full bg-zinc-900 overflow-hidden">
+                    <img src="${FEATURED_MOVIE.image}" alt="Hero Background" class="w-full h-full object-cover opacity-80">
+                    
+                    <div class="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-zinc-950 to-transparent"></div>
+
+                    <div class="absolute top-[30%] md:top-[25%] left-4 md:left-12 max-w-xl space-y-6">
+                        <h1 class="text-5xl md:text-7xl font-black text-white tracking-tighter drop-shadow-lg">
+                            ${FEATURED_MOVIE.title.toUpperCase()}
+                        </h1>
+                        
+                        <div class="flex items-center space-x-2 text-white/90 text-sm md:text-base font-medium">
+                            <span class="text-green-400">${FEATURED_MOVIE.match}</span>
+                            <span class="text-gray-400">${FEATURED_MOVIE.year}</span>
+                            <span class="border border-gray-500 px-1 text-xs">${FEATURED_MOVIE.age}</span>
+                            <span>${FEATURED_MOVIE.seasons}</span>
+                        </div>
+
+                        <p class="text-white text-base md:text-lg drop-shadow-md line-clamp-3 md:line-clamp-none">
+                            ${FEATURED_MOVIE.description}
+                        </p>
+
+                        <div class="flex items-center space-x-3 pt-4">
+                            <button class="flex items-center bg-white text-black px-4 md:px-6 py-2 md:py-3 rounded font-bold hover:bg-opacity-80 transition active:scale-95">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-7 md:h-7 mr-2 fill-current" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                Play
+                            </button>
+                            <button onclick='openModal(${JSON.stringify(FEATURED_MOVIE).replace(/'/g, "&#39;")})' class="flex items-center bg-gray-500/70 text-white px-4 md:px-6 py-2 md:py-3 rounded font-bold hover:bg-gray-500/50 transition active:scale-95 backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-7 md:h-7 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                                More Info
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderRows() {
+            const rowsContainer = document.getElementById('content-rows');
+            
+            CATEGORIES.forEach(category => {
+                const rowHtml = `
+                    <div class="h-full space-y-2 md:space-y-4 px-4 md:px-12 my-6 md:my-10 group">
+                        <h2 class="text-sm md:text-xl font-semibold text-gray-200 transition-colors hover:text-white cursor-pointer inline-flex items-center">
+                            ${category.title} <span class="hidden group-hover:block text-xs text-cyan-500 ml-2 font-bold animate-pulse">Explore All &gt;</span>
+                        </h2>
+                        
+                        <div class="relative group/row">
+                            <!-- Left Arrow -->
+                            <div onclick="scrollRow('${category.id}', 'left')" class="absolute top-0 bottom-0 left-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition group-hover/row:opacity-100 hover:scale-125 bg-black/50 rounded-full p-2 text-white flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                            </div>
+                            
+                            <div id="row-${category.id}" class="flex items-center space-x-2 md:space-x-3 overflow-x-scroll scrollbar-hide md:p-2 scroll-smooth">
+                                ${category.items.map(item => `
+                                    <div onclick='openModal(${JSON.stringify(item).replace(/'/g, "&#39;")})' 
+                                         class="relative flex-none h-32 md:h-44 min-w-[140px] md:min-w-[220px] cursor-pointer transition-transform duration-300 ease-out md:hover:scale-110 md:hover:z-50 rounded overflow-hidden shadow-lg ${item.rank ? 'ml-10' : ''}">
+                                        ${item.rank ? `<span class="absolute left-[-25px] bottom-0 text-[100px] leading-[80px] font-black text-black text-stroke-white drop-shadow-lg z-10 select-none">${item.rank}</span>` : ''}
+                                        <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover rounded" loading="lazy">
+                                        <div class="hidden md:block absolute inset-0 bg-black/30 opacity-0 hover:opacity-100 transition-opacity flex items-end p-2">
+                                            <p class="text-white text-xs font-bold">${item.title}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <!-- Right Arrow -->
+                            <div onclick="scrollRow('${category.id}', 'right')" class="absolute top-0 bottom-0 right-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition group-hover/row:opacity-100 hover:scale-125 bg-black/50 rounded-full p-2 text-white flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                rowsContainer.insertAdjacentHTML('beforeend', rowHtml);
+            });
+        }
+
+        // --- INTERACTION FUNCTIONS ---
+
+        function scrollRow(rowId, direction) {
+            const row = document.getElementById(`row-${rowId}`);
+            if (row) {
+                const scrollAmount = row.clientWidth - 100;
+                row.scrollLeft += direction === 'left' ? -scrollAmount : scrollAmount;
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                menu.classList.add('flex');
+            } else {
+                menu.classList.add('hidden');
+                menu.classList.remove('flex');
+            }
+        }
+
+        function openModal(movie) {
+            const modal = document.getElementById('movie-modal');
+            const content = document.getElementById('modal-content');
+            
+            // Populate modal content
+            content.innerHTML = `
+                <div class="relative h-64 md:h-[400px]">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#181818] to-transparent z-10"></div>
+                    <img src="${movie.image}" alt="${movie.title}" class="w-full h-full object-cover">
+                    <div class="absolute bottom-12 left-8 md:left-12 z-20">
+                        <h2 class="text-4xl md:text-5xl font-black text-white mb-4 drop-shadow-lg">${movie.title}</h2>
+                        <div class="flex space-x-3">
+                            <button class="flex items-center bg-white text-black px-6 py-2 rounded font-bold hover:bg-opacity-80 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 fill-current" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg> Play
+                            </button>
+                            <button class="p-2 border border-gray-400 rounded-full text-white hover:border-white hover:bg-white/10 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                            </button>
+                            <button class="p-2 border border-gray-400 rounded-full text-white hover:border-white hover:bg-white/10 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-8 md:p-12 grid md:grid-cols-3 gap-8 text-white">
+                    <div class="md:col-span-2 space-y-4">
+                        <div class="flex items-center space-x-3 text-sm font-bold">
+                            <span class="text-green-400">98% Match</span>
+                            <span class="text-gray-400">2023</span>
+                            <span class="border border-gray-500 px-1 text-xs">HD</span>
+                        </div>
+                        <p class="text-lg leading-relaxed text-gray-300">
+                            ${movie.description || "This title captures the essence of its genre, delivering a compelling narrative filled with unexpected twists and deep character development. A must-watch for fans looking for high-quality entertainment."}
+                        </p>
+                    </div>
+                    <div class="space-y-4 text-sm">
+                        <div>
+                            <span class="text-gray-500 block mb-1">Cast:</span>
+                            <span class="hover:underline cursor-pointer">Sample Actor</span>, <span class="hover:underline cursor-pointer">Jane Doe</span>, <span class="hover:underline cursor-pointer">John Smith</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500 block mb-1">Genres:</span>
+                            <span class="hover:underline cursor-pointer">Action</span>, <span class="hover:underline cursor-pointer">Sci-Fi</span>, <span class="hover:underline cursor-pointer">Thriller</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('movie-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // --- EVENTS & INIT ---
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 0) {
+                nav.classList.add('bg-zinc-950/95');
+                nav.classList.remove('bg-gradient-to-b');
+            } else {
+                nav.classList.remove('bg-zinc-950/95');
+                nav.classList.add('bg-gradient-to-b');
+            }
+        });
+
+        // Keyboard support for Modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            renderHero();
+            renderRows();
+        });
+
+    </script>
+</body>
+</html>
